@@ -33,8 +33,9 @@ help(){
 
 -----------------------------
 
--l -> Performing a list based subdomain gathering. ex: ./crtSubs -l domains.txt
--t -> Performing a single traget based subdomain gathering. ex: ./crtSubs -t examble.com
+-l -> Performing a list based subdomain gathering. ex: ./archSubs -l domains.txt
+-t -> Performing a single traget based subdomain gathering. ex: ./c
+archSubs -t examble.com
 
 -----------------------------
 
