@@ -33,7 +33,6 @@ help(){
 
 -----------------------------
 
--h -> Show the tool help menu
 -l -> Performing a list based subdomain gathering. ex: ./crtSubs -l domains.txt
 -t -> Performing a single traget based subdomain gathering. ex: ./crtSubs -t examble.com
 
