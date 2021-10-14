@@ -2,7 +2,7 @@
 
 input=$1
 
-mkdir -p ./crtOutput/
+mkdir -p ./archOutput/
 
 while getopts "l:t:" option; do
 
@@ -46,11 +46,11 @@ domain(){
 	
 	printf "\n\n \e[91m----------------- [Curl is working on \e[36m$target\e[91m] -----------------\e[0m \n\n"
 	
-	curl -X GET "https://web.archive.org/cdx/search/cdx?url=*.$target&fl=original&collapse=urlkey" > ./crtOutput/$target
+	curl -X GET "https://web.archive.org/cdx/search/cdx?url=*.$target&fl=original&collapse=urlkey" > ./archOutput/$target
 
 	printf "\n\n \e[91m----------------- [Extarcting \e[36m$target \e[91msubdomains] ----------------- \e[0m\n\n"
 
-	cat ./crtOutput/$target | grep -i $target | cut -d "/" -f 3 | sort -u | tee ./crtOutput/$target
+	cat ./crtOutput/$target | grep -i $target | cut -d "/" -f 3 | sort -u | tee ./archOutput/$target
 
 
 }
@@ -62,11 +62,11 @@ list(){
 
 	printf "\n\n \e[91m----------------- [Curl is working on \e[36m$single\e[91m] -----------------\e[0m \n\n"
 	
-	curl -X GET "https://web.archive.org/cdx/search/cdx?url=*.$single&fl=original&collapse=urlkey" > ./crtOutput/$single
+	curl -X GET "https://web.archive.org/cdx/search/cdx?url=*.$single&fl=original&collapse=urlkey" > ./archOutput/$single
 
 	printf "\n\n \e[91m----------------- [Extarcting \e[36m$single \e[91msubdomains] ----------------- \e[0m\n\n"
 
-	cat ./crtOutput/$single | grep -i $single | cut -d "/" -f 3 | sort -u | tee ./crtOutput/$single
+	cat ./crtOutput/$single | grep -i $single | cut -d "/" -f 3 | sort -u | tee ./archOutput/$single
 
 done
 
