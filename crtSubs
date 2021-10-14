@@ -1,0 +1,92 @@
+#!/bin/bash
+
+input=$1
+
+mkdir -p ./crtOutput/
+
+while getopts "l:t:" option; do
+
+   case $option in
+
+   t)
+
+      target=$OPTARG
+
+      ;;
+
+   l)
+
+      list=$OPTARG
+
+      ;;
+
+
+   esac
+
+done
+
+help(){
+	
+	printf "
+
+[Tool guide]
+
+-----------------------------
+
+-h -> Show the tool help menu
+-l -> Performing a list based subdomain gathering. ex: ./crtSubs -l domains.txt
+-t -> Performing a single traget based subdomain gathering. ex: ./crtSubs -t examble.com
+
+-----------------------------
+
+"
+}
+
+
+domain(){
+	
+	printf "\n\n \e[91m----------------- [Curl is working on \e[36m$target\e[91m] -----------------\e[0m \n\n"
+	
+	curl -X GET "https://web.archive.org/cdx/search/cdx?url=*.$target&fl=original&collapse=urlkey" > ./crtOutput/$target
+
+	printf "\n\n \e[91m----------------- [Extarcting \e[36m$target \e[91msubdomains] ----------------- \e[0m\n\n"
+
+	cat ./crtOutput/$target | grep -i $target | cut -d "/" -f 3 | sort -u | tee ./crtOutput/$target
+
+
+}
+
+
+list(){
+	
+	for single in $(cat $list);do
+
+	printf "\n\n \e[91m----------------- [Curl is working on \e[36m$single\e[91m] -----------------\e[0m \n\n"
+	
+	curl -X GET "https://web.archive.org/cdx/search/cdx?url=*.$single&fl=original&collapse=urlkey" > ./crtOutput/$single
+
+	printf "\n\n \e[91m----------------- [Extarcting \e[36m$single \e[91msubdomains] ----------------- \e[0m\n\n"
+
+	cat ./crtOutput/$single | grep -i $single | cut -d "/" -f 3 | sort -u | tee ./crtOutput/$single
+
+done
+
+}
+
+if [[ -z $input ]];then
+
+help
+
+elif [[ $target ]]; then
+
+domain
+
+elif [[ $list ]]; then
+
+list
+
+else
+
+help
+
+fi
